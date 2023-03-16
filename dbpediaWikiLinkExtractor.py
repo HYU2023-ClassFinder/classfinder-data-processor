@@ -34,6 +34,7 @@ def get_taxonomy(results,entity,wikiPageWikiLink):
         # if len(results["results"]["bindings"]) == 0:
         #     return get_taxonomy(results,'null',wikiPageWikiLink)
         # return get_taxonomy(results,results["results"]["bindings"][0]['s']['value'],wikiPageWikiLink)
+
         return wikiPageWikiLink
 
 def get_taxonomy_of_resource(dbpedia_resource):
@@ -44,6 +45,7 @@ def get_taxonomy_of_resource(dbpedia_resource):
     # dbpedia_resource = 'http://dbpedia.org/resource/' + dbpedia_resource.replace(' ', '_')
     dbpedia_resource = dbpedia_resource.replace(' ', '_')
     taxonomy_list = get_taxonomy(results,dbpedia_resource,list_for_hypernyms)
+    # print("# of links", len(taxonomy_list))
     return taxonomy_list
 
 # get_taxonomy_of_resource('Barack Obama')
@@ -52,6 +54,9 @@ while(True):
     concept = input()
     if(concept == ''):
         break
+    edgeCount = 0
     for _ in get_taxonomy_of_resource(concept):
         print(_)
+        edgeCount = edgeCount+1
+    print('The number of existing links of ' + concept + ": " + str(edgeCount))
     print("---------------")
